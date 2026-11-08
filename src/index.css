@@ -1,0 +1,354 @@
+@font-face {
+  font-family: 'Urbanist';
+  src: url('/fonts/Urbanist-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Urbanist';
+  src: url('/fonts/Urbanist-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Neumorphic clay base */
+  --clay: #e3eafa;
+  --clay-d: #c3cfee;   /* shadow */
+  --clay-l: #ffffff;   /* highlight */
+
+  --ink: #F48591;
+  --ink-soft: #7681a6;
+  --ink-faint: #a6b0d0;
+
+  /* full accent palette — use them all */
+  --violet: #F48591;
+  --violet-d: #F48591;
+  --lav: #b8b9ff;
+  --green: #3dd68c;
+  --green-d: #16c06e;
+  --coral: #ff7a92;
+  --pink: #ff9bb3;
+  --peach: #ffc9a3;
+  --gold: #ffd86b;
+  --sky: #8fd0ff;
+  --aqua: #5ad0d6;
+
+  /* neumorphic shadow recipes */
+  --raise: 9px 9px 20px rgba(165,181,222,.6), -9px -9px 20px rgba(255,255,255,.95);
+  --raise-sm: 5px 5px 12px rgba(165,181,222,.55), -5px -5px 12px rgba(255,255,255,.95);
+  --inset: inset 6px 6px 12px rgba(165,181,222,.6), inset -6px -6px 12px rgba(255,255,255,.95);
+  --inset-sm: inset 4px 4px 8px rgba(165,181,222,.55), inset -4px -4px 8px rgba(255,255,255,.95);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100dvh; }
+html, body { overflow-x: hidden; max-width: 100%; }
+body {
+  margin: 0;
+  font-family: 'Urbanist', system-ui, sans-serif;
+  background:
+    radial-gradient(1100px 700px at 8% -8%, #efe9ff 0%, transparent 52%),
+    radial-gradient(1000px 700px at 100% 0%, #e0f1ff 0%, transparent 48%),
+    linear-gradient(180deg, #e9eefb 0%, #e1e8f8 100%);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; outline: none; -webkit-tap-highlight-color: transparent; text-transform: inherit; letter-spacing: inherit; }
+button:focus, button:focus-visible { outline: none; }
+::-webkit-scrollbar { width: 0; height: 0; }
+img { display: block; max-width: 100%; }
+
+/* ---- form controls ---- */
+input, select, textarea {
+  font-family: inherit; font-size: 15px; font-weight: 700; color: var(--ink);
+  border: none; outline: none; background: transparent; width: 100%;
+}
+input::placeholder { color: var(--ink-faint); font-weight: 600; }
+input[type="time"] { color: var(--ink); }
+:root { --pilula: 52px; } /* todas as pílulas da tela de entrar com a mesma altura */
+.field { height: var(--pilula); padding: 0 24px; display: flex; align-items: center; background: var(--campo, #e0e7f6); transition: background .35s ease; border-radius: 999px; box-shadow: var(--inset); } /* caixinhas redondinhas (pílula) */
+.field input { width: 100%; text-align: center; color: var(--acc-texto, #F48591); }
+
+/* range slider */
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: 6px; background: #d4ddf2; box-shadow: var(--inset-sm); }
+input[type="range"]::-webkit-slider-runnable-track { height: 10px; border-radius: 6px; background: transparent; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; margin-top: -8px; background: linear-gradient(135deg,#F48591,#F48591); box-shadow: 4px 5px 12px rgba(244,133,145,.5); cursor: pointer; }
+input[type="range"]::-moz-range-track { height: 10px; border-radius: 6px; background: transparent; }
+input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border: none; border-radius: 50%; background: linear-gradient(135deg,#F48591,#F48591); box-shadow: 4px 5px 12px rgba(244,133,145,.5); cursor: pointer; }
+
+/* app content column + grids */
+.content { max-width: 1220px; margin: 0 auto; width: 100%; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cardgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+
+/* ===== desktop dashboard grids ===== */
+.row3 { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 18px; align-items: stretch; }
+.row3 > * { height: 100%; }
+.split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 44px; align-items: start; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+@media (max-width: 1040px) {
+  .row3 { grid-template-columns: 1fr 1fr; }
+  .split { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .row3 { grid-template-columns: 1fr; }
+  .g2 { grid-template-columns: 1fr; }
+  .two { grid-template-columns: 1fr; }
+}
+
+/* ============ desktop shell ============ */
+.shell { display: flex; min-height: 100dvh; }
+
+.sidebar {
+  width: 268px; flex: 0 0 268px; position: sticky; top: 0; align-self: flex-start;
+  height: 100dvh; padding: 30px 22px calc(20px + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; /* 02/10/2026: no celular o menu é mais alto que a tela; agora rola até o SAIR */
+  background: linear-gradient(180deg,#eef2fdcc,#e6edfacc); backdrop-filter: blur(12px);
+  box-shadow: 12px 0 40px rgba(120,134,200,.14);
+  z-index: 40;
+}
+
+.main {
+  flex: 1; min-width: 0;
+  padding: 46px clamp(24px,4vw,64px) 70px;
+  max-width: 1500px; margin: 0 auto; width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
+  gap: clamp(28px,3vw,48px) clamp(16px,2vw,28px);
+  justify-items: center;
+}
+
+.detail { display: flex; gap: clamp(24px,4vw,60px); align-items: center; flex-wrap: wrap; justify-content: center; }
+.detail-info { flex: 1 1 300px; min-width: 260px; max-width: 420px; display: flex; flex-direction: column; }
+
+.burger { display: none; width: 46px; height: 46px; border-radius: 15px; background: #fff; box-shadow: var(--raise-sm); place-items: center; color: var(--violet); flex: 0 0 auto; }
+.scrim { display: none; }
+
+/* ---- tablet / mobile: sidebar becomes a sliding drawer ---- */
+@media (max-width: 940px) {
+  .sidebar {
+    position: fixed; left: 0; top: 0; transform: translateX(-100%);
+    transition: transform .38s cubic-bezier(.22,1,.36,1);
+    box-shadow: 16px 0 60px rgba(120,134,200,.3);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .scrim { display: block; position: fixed; inset: 0; background: rgba(45,53,86,.32); z-index: 39; backdrop-filter: blur(2px); }
+  .burger { display: grid; }
+  .main { padding: 30px clamp(18px,5vw,40px) 60px; }
+}
+
+@media (max-width: 560px) {
+  .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 34px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* a fonte da pílula de cima: CF Bernados */
+@font-face { font-family: 'CF Bernados'; src: url('/fonts/CFBernados-Regular.woff2') format('woff2'), url('/fonts/CFBernados-Regular.woff') format('woff'); font-weight: 400; font-display: swap; }
+
+/* título SQUIRCLES como no VIDS: cada letra dentro de um squircle cor-de-rosa, letra lele */
+:root { --squircle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M100.00 50.00 L99.96 59.35 L99.84 63.86 L99.65 67.43 L99.38 70.48 L99.02 73.20 L98.59 75.66 L98.09 77.91 L97.50 79.99 L96.83 81.92 L96.08 83.72 L95.24 85.40 L94.33 86.97 L93.33 88.43 L92.24 89.79 L91.06 91.06 L89.79 92.24 L88.43 93.33 L86.97 94.33 L85.40 95.24 L83.72 96.08 L81.92 96.83 L79.99 97.50 L77.91 98.09 L75.66 98.59 L73.20 99.02 L70.48 99.38 L67.43 99.65 L63.86 99.84 L59.35 99.96 L50.00 100.00 L40.65 99.96 L36.14 99.84 L32.57 99.65 L29.52 99.38 L26.80 99.02 L24.34 98.59 L22.09 98.09 L20.01 97.50 L18.08 96.83 L16.28 96.08 L14.60 95.24 L13.03 94.33 L11.57 93.33 L10.21 92.24 L8.94 91.06 L7.76 89.79 L6.67 88.43 L5.67 86.97 L4.76 85.40 L3.92 83.72 L3.17 81.92 L2.50 79.99 L1.91 77.91 L1.41 75.66 L0.98 73.20 L0.62 70.48 L0.35 67.43 L0.16 63.86 L0.04 59.35 L0.00 50.00 L0.04 40.65 L0.16 36.14 L0.35 32.57 L0.62 29.52 L0.98 26.80 L1.41 24.34 L1.91 22.09 L2.50 20.01 L3.17 18.08 L3.92 16.28 L4.76 14.60 L5.67 13.03 L6.67 11.57 L7.76 10.21 L8.94 8.94 L10.21 7.76 L11.57 6.67 L13.03 5.67 L14.60 4.76 L16.28 3.92 L18.08 3.17 L20.01 2.50 L22.09 1.91 L24.34 1.41 L26.80 0.98 L29.52 0.62 L32.57 0.35 L36.14 0.16 L40.65 0.04 L50.00 0.00 L59.35 0.04 L63.86 0.16 L67.43 0.35 L70.48 0.62 L73.20 0.98 L75.66 1.41 L77.91 1.91 L79.99 2.50 L81.92 3.17 L83.72 3.92 L85.40 4.76 L86.97 5.67 L88.43 6.67 L89.79 7.76 L91.06 8.94 L92.24 10.21 L93.33 11.57 L94.33 13.03 L95.24 14.60 L96.08 16.28 L96.83 18.08 L97.50 20.01 L98.09 22.09 L98.59 24.34 L99.02 26.80 L99.38 29.52 L99.65 32.57 L99.84 36.14 L99.96 40.65Z' fill='black'/%3E%3C/svg%3E"); }
+.titulo-sq { display: flex; justify-content: center; gap: 4px; font-family: 'CF Bernados', sans-serif; font-size: 25px; line-height: 1; }
+.titulo-sq span { display: grid; place-items: center; width: 1.14em; height: 1.14em; padding-top: .06em; background: #F48591; color: #FFFBF3; -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
+
+/* todas as letras da tela de entrar em CF Bernados */
+form, form button, form input, form div { font-family: 'CF Bernados', sans-serif !important; font-weight: 400 !important; }
+
+/* a fonte agora é a Scota, em todas as letras da tela de entrar */
+@font-face { font-family: 'Scota'; src: url('/fonts/Scota.otf') format('opentype'); font-display: swap; }
+form, form button, form input, form div, form span, .titulo-sq { font-family: 'Scota', sans-serif !important; }
+
+/* o quadradinho continua na CF Bernados (a Scota é só para o resto) */
+.titulo-sq, .titulo-sq span { font-family: 'CF Bernados', sans-serif !important; }
+.titulo-sq span { background: var(--caixa, #F48591); color: var(--caixa-letra, #FFFBF3); transition: background .3s ease, color .3s ease; }
+
+/* entrar e cadastrar (as duas pílulas) em CF Bernados */
+form button.pilula-bern, form button.pilula-bern span { font-family: 'CF Bernados', sans-serif !important; }
+
+/* nome, usuário e senha em CF Bernados */
+form div.rotulo-bern { font-family: 'CF Bernados', sans-serif !important; font-size: 13px !important; }
+
+/* espaço para o olhinho dentro da pílula da senha */
+.field input[aria-label="senha"], .field input[aria-label="repetir senha"] { padding: 0 34px; }
+
+/* a logo (quadradinho) passa por baixo de todas as pílulas quando é arrastada */
+.field { position: relative; z-index: 2; }
+form button[type=submit] { position: relative; z-index: 2; }
+
+/* no entrar tem menos coisa: as pílulas ficam mais altas */
+form[data-modo="entrar"] { --pilula: 64px; }
+
+/* no entrar as letras também ficam maiores */
+form[data-modo="entrar"] div.rotulo-bern { font-size: 16px !important; }
+form[data-modo="entrar"] button[type=submit] { font-size: 25px !important; }
+form[data-modo="entrar"] .field input { font-size: 19px; }
+
+/* puxar a página para cima/baixo não mostra fundo branco (sem o 'quique' do navegador) */
+html, body { overscroll-behavior: none; background-color: #e5ebf9; }
+
+/* entrar: o botão um pouco maior e as letras com brilho (glow) */
+form[data-modo="entrar"] button[type=submit] { height: calc(var(--pilula) - 4px) !important; font-size: 23px !important; letter-spacing: 7px !important; text-shadow: 0 0 6px var(--caixa-letra); }
+
+/* entrar: umbigo e senha com brilho, e a bordinha da foto também */
+form[data-modo="entrar"] div.rotulo-bern { text-shadow: 0 0 8px #FFFBF3, 0 0 18px #FFFBF3; }
+
+/* entrar: o botão e a frase sobem um pouco; o cartão fica do mesmo tamanho (o espaço vai para baixo) */
+form[data-modo="entrar"] { padding-bottom: 26px !important; }
+/* entrar: "seus dados estão seguros" bem embaixo no cartão, separado do botão (o cartão continua do mesmo tamanho) */
+form[data-modo="entrar"] > div:last-child { margin-top: 48px !important; }
+
+/* o aviso escrito dentro da pílula vazia: na cor do texto do cartão */
+.field input::placeholder { color: var(--acc-texto, #F48591); opacity: .85; font-family: 'Scota', sans-serif; text-transform: lowercase; }
+
+/* cadastrar: "seus dados estão seguros" também bem embaixo no cartão, separado do botão (mesmo tamanho de cartão) */
+form[data-modo="criar"] { padding-bottom: 14px !important; }
+form[data-modo="criar"] > div:last-child { margin-top: 42px !important; }
+
+/* i.lle.sh (06/10/2026): cores e letra do ll e.s h por cima do my.squircl.es. O lugar e o tamanho de tudo continuam
+   iguais; o 3D macio (neumórfico) continua, só com sombras neutras no lugar das azuladas. */
+:root {
+  --raise: 9px 9px 20px rgba(200,196,185,.55), -9px -9px 20px rgba(255,255,255,.95);
+  --raise-sm: 5px 5px 12px rgba(200,196,185,.5), -5px -5px 12px rgba(255,255,255,.95);
+  --inset-sm: inset 4px 4px 8px rgba(0,0,0,.07), inset -4px -4px 8px rgba(255,255,255,.9);
+}
+html, body { background-color: #FFFFFF !important; }
+/* a letra do site (SF Pro, a do iPhone e do Mac) em tudo */
+form, form button, form input, form div, form span, form label, .titulo-sq, .titulo-sq span,
+form button.pilula-bern, form button.pilula-bern span, form div.rotulo-bern, .field input::placeholder {
+  font-family: 'Distro', sans-serif !important;
+}
+form div.rotulo-bern { font-weight: 600 !important; text-shadow: none !important; }
+form button[type=submit] { text-shadow: none !important; font-weight: 600 !important; }
+/* a logo com o pontinho (o mesmo encaixe da página lle.sh/le) */
+.logo-lle { padding: 0; border: 0; background: none; cursor: pointer; line-height: 0; }
+.logo-lle .logo-caixa { position: relative; display: inline-block; line-height: 0; }
+.logo-lle .logo { height: 72px; width: auto; display: block; -webkit-user-drag: none; user-select: none; }
+.logo-lle .ponto { position: absolute; left: 90.74%; top: .86%; width: 11.29%; height: 28.64%; pointer-events: none; }
+.logo-lle .ponto.sai { animation: pontoSai 1.5s cubic-bezier(.3,.7,.4,1); }
+.logo-lle .logo-caixa.pousa { animation: logoPousa 1.5s ease-out; }
+@keyframes pontoSai {
+  0% { transform: translate(0,0) rotate(0) scale(1); }
+  12% { transform: translate(0,12%) scale(1.25,.75); }
+  40% { transform: translate(-120%,-260%) rotate(-200deg) scale(1.1); }
+  62% { transform: translate(-60%,-120%) rotate(-330deg) scale(1); }
+  78% { transform: translate(0,0) rotate(-360deg) scale(1.2,.8); }
+  88% { transform: translate(0,-25%) rotate(-360deg) scale(.95,1.05); }
+  100% { transform: translate(0,0) rotate(-360deg) scale(1); }
+}
+@keyframes logoPousa { 0%,74% { transform: none; } 80% { transform: translateY(2px) scale(1.02,.96); } 90% { transform: translateY(-2px); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .logo-lle .ponto.sai, .logo-lle .logo-caixa.pousa { animation: none; } }
+/* o que a pessoa digita: um cinza um pouco mais firme que o dos títulos, para ler bem (nada de preto) */
+form .field input { color: #ADA99F !important; }
+
+/* i.lle.sh (06/10/2026): a letra igual à do site lle.sh, em tudo: SF Pro, tamanhos do menu (13px), sem letras esticadas, sem brilho.
+   Vale para o entrar e para as duas partes do cadastro. */
+form div.rotulo-bern, form[data-modo="entrar"] div.rotulo-bern, form[data-modo="criar"] div.rotulo-bern {
+  font-size: 13px !important; font-weight: 600 !important; letter-spacing: .3px !important; text-shadow: none !important; color: #C8C4B9 !important;
+}
+form .field input, form[data-modo="entrar"] .field input { font-size: 17px !important; font-weight: 400 !important; letter-spacing: 0 !important; }
+form .field input::placeholder { font-size: 15px !important; text-transform: none !important; color: #D6D4CE !important; opacity: 1 !important; }
+form button[type=submit], form[data-modo="entrar"] button[type=submit] {
+  font-size: 14px !important; font-weight: 600 !important; letter-spacing: .2px !important; text-shadow: none !important; color: #C8C4B9 !important;
+}
+form [role=status] { font-size: 13px !important; font-weight: 500 !important; color: #C8C4B9 !important; }
+form div[style*="11.5px"] { font-size: 11px !important; font-weight: 500 !important; color: #D6D4CE !important; opacity: 1 !important; }
+/* tudo em minúsculas (o nome ll e s h é sempre minúsculo, então os outros títulos, o botão e o rodapé acompanham) */
+form, form * { text-transform: none !important; }
+
+/* i.lle.sh (06/10/2026): a letra do site lle.sh (SF Pro) com os tamanhos e o espaçamento dele: nada de letra esticada nem brilho.
+   Tudo em minúsculas (o nome ll e s h é sempre minúsculo; os outros títulos, o botão e o rodapé acompanham). Vale para entrar e cadastrar. */
+form, form * { text-transform: none !important; }
+form div.rotulo-bern { font-size: 14px !important; font-weight: 600 !important; letter-spacing: 0 !important; text-shadow: none !important; }
+form .field input { font-size: 17px !important; font-weight: 400 !important; letter-spacing: 0 !important; color: #ADA99F !important; }
+form .field input::placeholder { font-size: 15px !important; color: #D6D4CE !important; opacity: 1 !important; }
+form button[type=submit] { font-size: 17px !important; font-weight: 600 !important; letter-spacing: .2px !important; text-shadow: none !important; }
+/* letras claras (06/10/2026): tudo no cinza claro da paleta; o botão pequeno, em minúsculas */
+form div.rotulo-bern { font-size: 13px !important; color: #C8C4B9 !important; }
+form .field input { font-size: 16px !important; color: #ADA99F !important; }
+form .field input::placeholder { font-size: 14px !important; color: #D6D4CE !important; }
+form button[type=submit] { font-size: 14px !important; font-weight: 600 !important; letter-spacing: .2px !important; color: #C8C4B9 !important; }
+form [role=status] { color: #ADA99F !important; font-size: 13px !important; }
+
+/* a letra do ll e s h é a Distro Black (06/10/2026), a mesma da logo, em todas as letras da página */
+@font-face { font-family: 'Distro'; src: url('/fonts/DISTROBL.woff2') format('woff2'); font-weight: 100 1000; font-display: block; }
+/* letras maiores (06/10/2026, a Dra Lê pediu: aumenta) */
+form div.rotulo-bern, form[data-modo="entrar"] div.rotulo-bern, form[data-modo="criar"] div.rotulo-bern { font-size: 17px !important; }
+form .field input, form[data-modo="entrar"] .field input { font-size: 21px !important; }
+form .field input::placeholder { font-size: 18px !important; }
+form button[type=submit], form[data-modo="entrar"] button[type=submit] { font-size: 19px !important; }
+form [role=status] { font-size: 16px !important; }
+form div[style*="11.5px"] { font-size: 14px !important; }
+/* letras bem maiores (06/10/2026, segunda vez: a Dra Lê pediu mais) */
+form div.rotulo-bern, form[data-modo="entrar"] div.rotulo-bern, form[data-modo="criar"] div.rotulo-bern { font-size: 23px !important; margin-bottom: 10px !important; }
+form .field input, form[data-modo="entrar"] .field input { font-size: 25px !important; }
+form .field input::placeholder { font-size: 21px !important; }
+form button[type=submit], form[data-modo="entrar"] button[type=submit] { font-size: 26px !important; }
+form [role=status] { font-size: 19px !important; }
+form div[style*="11.5px"] { font-size: 17px !important; }
+
+/* 08/10/2026: cores da página principal do lle.sh (a Dra Lê achou o cinza feio): fundo e cartão no creme dela,
+   campos brancos, todas as letras no rosa da paleta. As bolinhas e os quadradinhos caindo ficam atrás do cartão. */
+html, body { background-color: #FFFBF3 !important; }
+form[data-modo] { position: relative; z-index: 1; }
+form div.rotulo-bern, form[data-modo="entrar"] div.rotulo-bern, form[data-modo="criar"] div.rotulo-bern,
+form button[type=submit], form[data-modo="entrar"] button[type=submit], form [role=status] { color: #F48591 !important; }
+form .field input { color: #F48591 !important; }
+form .field input::placeholder { color: #FA8D85 !important; opacity: .55 !important; }
+form div[style*="11.5px"] { color: #C18EA9 !important; }
+form[data-modo] { box-shadow: 0 24px 60px rgba(200,196,185,.45) !important; }
+
+/* 09/10/2026: o Chrome pintava os campos de azul-claro com letra preta quando preenchia sozinho o e-mail e a senha.
+   Agora o campo continua branco e a letra continua rosa, preenchido ou não. */
+form .field input:-webkit-autofill, form .field input:-webkit-autofill:hover,
+form .field input:-webkit-autofill:focus, form .field input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset !important; box-shadow: 0 0 0 1000px #FFFFFF inset !important;
+  -webkit-text-fill-color: #F48591 !important; caret-color: #F48591; transition: background-color 99999s ease 0s;
+}
+form .field input { -webkit-text-fill-color: #F48591; background: transparent !important; }
+a, button, input, select, textarea, [tabindex] { outline: none; -webkit-tap-highlight-color: transparent; }
+:focus, :focus-visible { outline: none; }
+
+/* 09/10/2026: a Dra Lê pediu tudo preto e branco, com cores contrárias no entrar e no cadastrar.
+   entrar: página branca, cartão preto, campos e botão brancos com letra preta, títulos brancos, peças pretas.
+   cadastrar: tudo ao contrário (página preta, cartão branco, campos e botão pretos com letra branca, peças brancas). */
+html, body { background-color: var(--fundo-pag, #FFFFFF) !important; }
+form[data-modo] { background: var(--cartao) !important; box-shadow: none !important; }
+/* uma folga da cor da página em volta do cartão, para as peças (da mesma cor) nunca grudarem nele */
+form[data-modo] { box-shadow: 0 0 0 8px var(--fundo-pag) !important; }
+form div.rotulo-bern, form[data-modo="entrar"] div.rotulo-bern, form[data-modo="criar"] div.rotulo-bern,
+form [role=status], form div[style*="11.5px"] { color: var(--acc-texto) !important; text-shadow: none !important; opacity: 1 !important; }
+form .field { background: var(--campo) !important; box-shadow: none !important; }
+form .field input, form[data-modo] .field input { color: var(--letra-campo) !important; -webkit-text-fill-color: var(--letra-campo) !important; caret-color: var(--letra-campo); }
+form .field input::placeholder { color: var(--letra-campo) !important; -webkit-text-fill-color: var(--letra-campo) !important; opacity: .35 !important; }
+form .field button { color: var(--letra-campo) !important; }
+form button[type=submit], form[data-modo="entrar"] button[type=submit] { background: var(--caixa) !important; color: var(--caixa-letra) !important; box-shadow: none !important; text-shadow: none !important; }
+form .field input:-webkit-autofill, form .field input:-webkit-autofill:hover,
+form .field input:-webkit-autofill:focus, form .field input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--campo) inset !important; box-shadow: 0 0 0 1000px var(--campo) inset !important;
+  -webkit-text-fill-color: var(--letra-campo) !important; caret-color: var(--letra-campo);
+}
+html[data-modo="criar"] .logo-lle img { filter: invert(1); }
+a, button, input, select, textarea, [tabindex] { outline: none; -webkit-tap-highlight-color: transparent; }
+:focus, :focus-visible { outline: none; box-shadow: none; }
+/* 09/10/2026: letras de entrar e cadastrar maiores; a pílula continua do mesmo tamanho */
+form button[type=submit], form[data-modo="entrar"] button[type=submit] { font-size: 34px !important; line-height: 1 !important; }
+
+/* 09/10/2026: cadastrar menor, para caber na tela: bem menos espaço em cima do ll e.s h, um pouco menos embaixo,
+   e "seus dados estão seguros" mais perto do botão cadastrar. O entrar não muda. */
+form[data-modo="criar"] { padding-top: 40px !important; }
+form[data-modo="criar"] > div:first-child { height: auto !important; min-height: 72px; margin-bottom: 40px !important; }
+form[data-modo="criar"] > div:last-child { margin-top: 26px !important; }

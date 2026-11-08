@@ -1,0 +1,53 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>entrando…</title>
+<style>@font-face{font-family:'Distro';src:url('/fonts/DISTROBL.woff2') format('woff2');font-display:block}html,body{margin:0;height:100%;background:#FFFFFF}a,button,input,select,textarea,[tabindex]{outline:none;-webkit-tap-highlight-color:transparent}:focus,:focus-visible{outline:none;box-shadow:none}</style>
+<link rel="icon" type="image/png" sizes="32x32" href="/bola/bola-32.png">
+<link rel="shortcut icon" href="/bola/bola.ico">
+<link rel="apple-touch-icon" href="/bola/bola-apple.png">
+<meta property="og:image" content="https://i.lle.sh/bola/bola-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://i.lle.sh/bola/bola-og.png">
+</head><body>
+<script>
+/* LOGIN ÚNICO da plataforma: um site nosso pergunta "quem é?" e volta com a chave da pessoa.
+   Já entrou aqui uma vez: volta na hora, sem mostrar nada. Nunca entrou: mostra a página de entrar e depois volta.
+   Só devolve para domínios nossos. */
+(function () {
+  var SB = 'https://gqeipjiidtrcbmnrnknc.supabase.co', PUB = 'sb_publishable_5PMV1M5XkgU6xzdnwCcWgQ_xy-9fLLV';
+  var NOSSOS = /(^|\.)(inteira\.eu|wholee\.me|umbii\.boo|veenus\.love|iiiii\.boo|lell\.ooo|umbig\.ooo|umbigo\.love|umb\.cards|lell\.app|veenus\.quest|boooo\.uk|ee\.cards|squircl\.es|iiii\.sh|mbig\.ooo|letici\.app|meu\.app|umbigo\.co|estrogeni\.us|umbii\.ink|boook\.ing|booook\.baby|gius\.app|papeli\.to|dashii\.top|appp\.to|17\.je|noii\.in|noii\.sh|noii\.ink|boook\.press|wii\.sh|lell\.ing|lle\.sh|pipel\.art|papel\.press|femea\.live|leticia\.love|alll\.boo|noii\.love|braee\.in|wholee\.us|escrev\.eu|canga\.space|canga\.club|figurati\.lol|minha\.best|frutti\.fit|mascu\.living|i-u\.work|teens\.cool|consulta\.doctor|agenda\.doctor|frutti\.sh|chicle\.sh|chiclet\.es|preench\.eu|noii\.one|wholeaga\.in|leticia\.cards)$/;
+  var volta = new URLSearchParams(location.search).get('volta') || '', u = null;
+  try { u = new URL(volta) } catch (e) {}
+  if (!u || u.protocol !== 'https:' || !NOSSOS.test(u.hostname)) return;
+  // TRAVA DO PISCA-PISCA (09/10/2026): se o mesmo site voltar aqui 4 vezes em 30 segundos, ele não está conseguindo
+  // guardar a entrada; para de ir e voltar e mostra uma frase com um botão para tentar de novo
+  var VK = 'sso-voltas', agora = Date.now(), vz = {};
+  try { vz = JSON.parse(sessionStorage.getItem(VK) || '{}') } catch (e) {}
+  var lista = (vz[u.origin] || []).filter(function (t) { return agora - t < 30000 });
+  lista.push(agora); vz[u.origin] = lista;
+  try { sessionStorage.setItem(VK, JSON.stringify(vz)) } catch (e) {}
+  if (lista.length >= 4) {
+    document.body.innerHTML = '<div style="min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:96px 24px;box-sizing:border-box;font:19px/1.4 Distro,system-ui,sans-serif;color:#000;text-align:center"><div style="text-wrap:balance;max-width:320px">' + u.hostname + ' não conseguiu guardar a sua entrada</div><a href="#" id="de-novo" style="color:#fff;background:#000;text-decoration:none;padding:16px 40px;border-radius:999px">tentar de novo</a></div>';
+    document.getElementById('de-novo').onclick = function (e) { e.preventDefault(); delete vz[u.origin]; try { sessionStorage.setItem(VK, JSON.stringify(vz)) } catch (x) {} location.reload() };
+    return;
+  }
+  var K = 'sb-gqeipjiidtrcbmnrnknc-auth-token', s = null;
+  try { s = JSON.parse(localStorage.getItem(K) || 'null') } catch (e) {}
+  if (s && s.currentSession) s = s.currentSession;
+  function vai(t) { location.replace(u.origin + u.pathname + u.search + '#sso=' + encodeURIComponent(t)) }
+  function entra() { location.replace('/?volta=' + encodeURIComponent(volta)) }
+  // entrada velha (a conta saiu em outro lugar): apaga ela e mostra a página de entrar, em vez de ficar indo e voltando (08/10/2026)
+  function sai() { try { localStorage.removeItem(K) } catch (e) {} entra() }
+  if (!s || !s.refresh_token) return sai();
+  function renova() {
+    fetch(SB + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey: PUB, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: s.refresh_token }) })
+      .then(function (r) { return r.ok ? r.json() : null })
+      .then(function (n) { if (!n || !n.access_token) return sai(); n.expires_at = n.expires_at || Math.floor(Date.now() / 1000) + (n.expires_in || 3600); try { localStorage.setItem(K, JSON.stringify(n)) } catch (e) {} vai(n.access_token) })
+      .catch(entra);
+  }
+  if (!(s.expires_at && s.expires_at * 1000 > Date.now() + 60000)) return renova();
+  // a chave ainda está no prazo: confere se a conta continua dentro antes de mandar de volta
+  fetch(SB + '/auth/v1/user', { headers: { apikey: PUB, Authorization: 'Bearer ' + s.access_token } })
+    .then(function (r) { if (r.ok) vai(s.access_token); else renova() })
+    .catch(function () { vai(s.access_token) });
+})();
+</script></body></html>

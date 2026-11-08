@@ -1,0 +1,11 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>saindo…</title>
+<style>html,body{margin:0;height:100%;background:linear-gradient(180deg,#eef2ff,#dfe7ff)}</style></head><body>
+<script>
+/* atalho para SAIR da conta (02/10/2026): no celular o menu lateral não abria e o botão SAIR ficava inalcançável.
+   Apaga só a sessão deste site e volta para a página de entrar. */
+(function () {
+  try { localStorage.removeItem('sb-gqeipjiidtrcbmnrnknc-auth-token'); localStorage.removeItem('porta-chave') } catch (e) {}
+  try { sessionStorage.removeItem('sso-tentou') } catch (e) {}
+  location.replace('/');
+})();
+</script></body></html>

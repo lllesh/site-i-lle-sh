@@ -1,0 +1,176 @@
+@font-face {
+  font-family: 'Urbanist';
+  src: url('/fonts/Urbanist-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Urbanist';
+  src: url('/fonts/Urbanist-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Neumorphic clay base */
+  --clay: #e3eafa;
+  --clay-d: #c3cfee;   /* shadow */
+  --clay-l: #ffffff;   /* highlight */
+
+  --ink: #F48591;
+  --ink-soft: #7681a6;
+  --ink-faint: #a6b0d0;
+
+  /* full accent palette — use them all */
+  --violet: #F48591;
+  --violet-d: #F48591;
+  --lav: #b8b9ff;
+  --green: #3dd68c;
+  --green-d: #16c06e;
+  --coral: #ff7a92;
+  --pink: #ff9bb3;
+  --peach: #ffc9a3;
+  --gold: #ffd86b;
+  --sky: #8fd0ff;
+  --aqua: #5ad0d6;
+
+  /* neumorphic shadow recipes */
+  --raise: 9px 9px 20px rgba(165,181,222,.6), -9px -9px 20px rgba(255,255,255,.95);
+  --raise-sm: 5px 5px 12px rgba(165,181,222,.55), -5px -5px 12px rgba(255,255,255,.95);
+  --inset: inset 6px 6px 12px rgba(165,181,222,.6), inset -6px -6px 12px rgba(255,255,255,.95);
+  --inset-sm: inset 4px 4px 8px rgba(165,181,222,.55), inset -4px -4px 8px rgba(255,255,255,.95);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100dvh; }
+html, body { overflow-x: hidden; max-width: 100%; }
+body {
+  margin: 0;
+  font-family: 'Urbanist', system-ui, sans-serif;
+  background:
+    radial-gradient(1100px 700px at 8% -8%, #efe9ff 0%, transparent 52%),
+    radial-gradient(1000px 700px at 100% 0%, #e0f1ff 0%, transparent 48%),
+    linear-gradient(180deg, #e9eefb 0%, #e1e8f8 100%);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; outline: none; -webkit-tap-highlight-color: transparent; text-transform: inherit; letter-spacing: inherit; }
+button:focus, button:focus-visible { outline: none; }
+::-webkit-scrollbar { width: 0; height: 0; }
+img { display: block; max-width: 100%; }
+
+/* ---- form controls ---- */
+input, select, textarea {
+  font-family: inherit; font-size: 15px; font-weight: 700; color: var(--ink);
+  border: none; outline: none; background: transparent; width: 100%;
+}
+input::placeholder { color: var(--ink-faint); font-weight: 600; }
+input[type="time"] { color: var(--ink); }
+:root { --pilula: 62px; } /* todas as pílulas da tela de entrar com a mesma altura */
+.field { height: var(--pilula); padding: 0 24px; display: flex; align-items: center; background: #e0e7f6; border-radius: 999px; box-shadow: var(--inset); } /* caixinhas redondinhas (pílula) */
+.field input { width: 100%; text-align: center; color: #F48591; }
+
+/* range slider */
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: 6px; background: #d4ddf2; box-shadow: var(--inset-sm); }
+input[type="range"]::-webkit-slider-runnable-track { height: 10px; border-radius: 6px; background: transparent; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; margin-top: -8px; background: linear-gradient(135deg,#F48591,#F48591); box-shadow: 4px 5px 12px rgba(244,133,145,.5); cursor: pointer; }
+input[type="range"]::-moz-range-track { height: 10px; border-radius: 6px; background: transparent; }
+input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border: none; border-radius: 50%; background: linear-gradient(135deg,#F48591,#F48591); box-shadow: 4px 5px 12px rgba(244,133,145,.5); cursor: pointer; }
+
+/* app content column + grids */
+.content { max-width: 1220px; margin: 0 auto; width: 100%; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cardgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+
+/* ===== desktop dashboard grids ===== */
+.row3 { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 18px; align-items: stretch; }
+.row3 > * { height: 100%; }
+.split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 44px; align-items: start; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+@media (max-width: 1040px) {
+  .row3 { grid-template-columns: 1fr 1fr; }
+  .split { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .row3 { grid-template-columns: 1fr; }
+  .g2 { grid-template-columns: 1fr; }
+  .two { grid-template-columns: 1fr; }
+}
+
+/* ============ desktop shell ============ */
+.shell { display: flex; min-height: 100dvh; }
+
+.sidebar {
+  width: 268px; flex: 0 0 268px; position: sticky; top: 0; align-self: flex-start;
+  height: 100dvh; padding: 30px 22px calc(20px + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg,#eef2fdcc,#e6edfacc); backdrop-filter: blur(12px);
+  box-shadow: 12px 0 40px rgba(120,134,200,.14);
+  z-index: 40;
+}
+
+.main {
+  flex: 1; min-width: 0;
+  padding: 46px clamp(24px,4vw,64px) 70px;
+  max-width: 1500px; margin: 0 auto; width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
+  gap: clamp(28px,3vw,48px) clamp(16px,2vw,28px);
+  justify-items: center;
+}
+
+.detail { display: flex; gap: clamp(24px,4vw,60px); align-items: center; flex-wrap: wrap; justify-content: center; }
+.detail-info { flex: 1 1 300px; min-width: 260px; max-width: 420px; display: flex; flex-direction: column; }
+
+.burger { display: none; width: 46px; height: 46px; border-radius: 15px; background: #fff; box-shadow: var(--raise-sm); place-items: center; color: var(--violet); flex: 0 0 auto; }
+.scrim { display: none; }
+
+/* ---- tablet / mobile: sidebar becomes a sliding drawer ---- */
+@media (max-width: 940px) {
+  .sidebar {
+    position: fixed; left: 0; top: 0; transform: translateX(-100%);
+    transition: transform .38s cubic-bezier(.22,1,.36,1);
+    box-shadow: 16px 0 60px rgba(120,134,200,.3);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .scrim { display: block; position: fixed; inset: 0; background: rgba(45,53,86,.32); z-index: 39; backdrop-filter: blur(2px); }
+  .burger { display: grid; }
+  .main { padding: 30px clamp(18px,5vw,40px) 60px; }
+}
+
+@media (max-width: 560px) {
+  .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 34px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* a fonte da pílula de cima: CF Bernados */
+@font-face { font-family: 'CF Bernados'; src: url('/fonts/CFBernados-Regular.woff2') format('woff2'), url('/fonts/CFBernados-Regular.woff') format('woff'); font-weight: 400; font-display: swap; }
+
+/* título SQUIRCLES como no VIDS: cada letra dentro de um squircle cor-de-rosa, letra lele */
+:root { --squircle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M100.00 50.00 L99.96 59.35 L99.84 63.86 L99.65 67.43 L99.38 70.48 L99.02 73.20 L98.59 75.66 L98.09 77.91 L97.50 79.99 L96.83 81.92 L96.08 83.72 L95.24 85.40 L94.33 86.97 L93.33 88.43 L92.24 89.79 L91.06 91.06 L89.79 92.24 L88.43 93.33 L86.97 94.33 L85.40 95.24 L83.72 96.08 L81.92 96.83 L79.99 97.50 L77.91 98.09 L75.66 98.59 L73.20 99.02 L70.48 99.38 L67.43 99.65 L63.86 99.84 L59.35 99.96 L50.00 100.00 L40.65 99.96 L36.14 99.84 L32.57 99.65 L29.52 99.38 L26.80 99.02 L24.34 98.59 L22.09 98.09 L20.01 97.50 L18.08 96.83 L16.28 96.08 L14.60 95.24 L13.03 94.33 L11.57 93.33 L10.21 92.24 L8.94 91.06 L7.76 89.79 L6.67 88.43 L5.67 86.97 L4.76 85.40 L3.92 83.72 L3.17 81.92 L2.50 79.99 L1.91 77.91 L1.41 75.66 L0.98 73.20 L0.62 70.48 L0.35 67.43 L0.16 63.86 L0.04 59.35 L0.00 50.00 L0.04 40.65 L0.16 36.14 L0.35 32.57 L0.62 29.52 L0.98 26.80 L1.41 24.34 L1.91 22.09 L2.50 20.01 L3.17 18.08 L3.92 16.28 L4.76 14.60 L5.67 13.03 L6.67 11.57 L7.76 10.21 L8.94 8.94 L10.21 7.76 L11.57 6.67 L13.03 5.67 L14.60 4.76 L16.28 3.92 L18.08 3.17 L20.01 2.50 L22.09 1.91 L24.34 1.41 L26.80 0.98 L29.52 0.62 L32.57 0.35 L36.14 0.16 L40.65 0.04 L50.00 0.00 L59.35 0.04 L63.86 0.16 L67.43 0.35 L70.48 0.62 L73.20 0.98 L75.66 1.41 L77.91 1.91 L79.99 2.50 L81.92 3.17 L83.72 3.92 L85.40 4.76 L86.97 5.67 L88.43 6.67 L89.79 7.76 L91.06 8.94 L92.24 10.21 L93.33 11.57 L94.33 13.03 L95.24 14.60 L96.08 16.28 L96.83 18.08 L97.50 20.01 L98.09 22.09 L98.59 24.34 L99.02 26.80 L99.38 29.52 L99.65 32.57 L99.84 36.14 L99.96 40.65Z' fill='black'/%3E%3C/svg%3E"); }
+.titulo-sq { display: flex; justify-content: center; gap: 4px; font-family: 'CF Bernados', sans-serif; font-size: 25px; line-height: 1; }
+.titulo-sq span { display: grid; place-items: center; width: 1.14em; height: 1.14em; padding-top: .06em; background: #F48591; color: #FFFBF3; -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
+
+/* todas as letras da tela de entrar em CF Bernados */
+form, form button, form input, form div { font-family: 'CF Bernados', sans-serif !important; font-weight: 400 !important; }
+
+/* a fonte agora é a Scota, em todas as letras da tela de entrar */
+@font-face { font-family: 'Scota'; src: url('/fonts/Scota.otf') format('opentype'); font-display: swap; }
+form, form button, form input, form div, form span, .titulo-sq { font-family: 'Scota', sans-serif !important; }
+
+/* o quadradinho continua na CF Bernados (a Scota é só para o resto) */
+.titulo-sq, .titulo-sq span { font-family: 'CF Bernados', sans-serif !important; }
+.titulo-sq span { background: var(--caixa, #F48591); color: var(--caixa-letra, #FFFBF3); transition: background .3s ease, color .3s ease; }

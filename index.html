@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    
+<link rel="icon" type="image/png" sizes="32x32" href="/bola/bola-32.png">
+<link rel="shortcut icon" href="/bola/bola.ico">
+<link rel="apple-touch-icon" href="/bola/bola-apple.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <script>
+      /* a página começa no ENTRAR (29/09/2026): o alto e o pé da tela já nascem na cor do fundo do entrar */
+      document.documentElement.style.background = '#FFFFFF'; document.documentElement.style.setProperty('--fundo-pag', '#FFFFFF')
+    </script>
+    <meta name="description" content="ka.lello — controle suas finanças de um jeito leve." />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>ll e.s h</title>
+    <meta property="og:title" content="my.squircl.es">
+    <meta property="og:url" content="https://my.squircl.es/">
+    <meta property="og:image" content="https://i.lle.sh/bola/bola-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://i.lle.sh/bola/bola-og.png">
+</head>
+  <body>
+    <!-- faixas fixas no alto e no pé da tela, na cor do fundo: o Safari do iPhone pinta a barra da hora e a barra do endereço com a cor delas -->
+    <div aria-hidden="true" style="position:fixed;left:0;right:0;top:0;height:calc(env(safe-area-inset-top) + 24px);background:var(--fundo-pag,#FFFFFF);z-index:0;pointer-events:none"></div>
+    <div aria-hidden="true" style="position:fixed;left:0;right:0;bottom:0;height:calc(env(safe-area-inset-bottom) + 24px);background:var(--fundo-pag,#FFFFFF);z-index:0;pointer-events:none"></div>
+    <div id="root" style="position:relative;z-index:1"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

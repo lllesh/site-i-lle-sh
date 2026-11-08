@@ -1,0 +1,25 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>entrando…</title>
+<style>html,body{margin:0;height:100%;background:linear-gradient(180deg,#eef2ff,#dfe7ff)}</style></head><body>
+<script>
+/* LOGIN ÚNICO da plataforma: um site nosso pergunta "quem é?" e volta com a chave da pessoa.
+   Já entrou aqui uma vez: volta na hora, sem mostrar nada. Nunca entrou: mostra a página de entrar e depois volta.
+   Só devolve para domínios nossos. */
+(function () {
+  var SB = 'https://gqeipjiidtrcbmnrnknc.supabase.co', PUB = 'sb_publishable_5PMV1M5XkgU6xzdnwCcWgQ_xy-9fLLV';
+  var NOSSOS = /(^|\.)(umbii\.boo|veenus\.love|iiiii\.boo|lell\.ooo|umbig\.ooo|umbigo\.love|umb\.cards|lell\.app|veenus\.quest|boooo\.uk|ee\.cards|squircl\.es|iiii\.sh|mbig\.ooo|letici\.app|meu\.app)$/;
+  var volta = new URLSearchParams(location.search).get('volta') || '', u = null;
+  try { u = new URL(volta) } catch (e) {}
+  if (!u || u.protocol !== 'https:' || !NOSSOS.test(u.hostname)) return;
+  var K = 'sb-gqeipjiidtrcbmnrnknc-auth-token', s = null;
+  try { s = JSON.parse(localStorage.getItem(K) || 'null') } catch (e) {}
+  if (s && s.currentSession) s = s.currentSession;
+  function vai(t) { location.replace(u.origin + u.pathname + u.search + '#sso=' + encodeURIComponent(t)) }
+  function entra() { location.replace('/?volta=' + encodeURIComponent(volta)) }
+  if (!s || !s.refresh_token) return entra();
+  if (s.expires_at && s.expires_at * 1000 > Date.now() + 60000) return vai(s.access_token);
+  fetch(SB + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey: PUB, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: s.refresh_token }) })
+    .then(function (r) { return r.ok ? r.json() : null })
+    .then(function (n) { if (!n) return entra(); n.expires_at = n.expires_at || Math.floor(Date.now() / 1000) + (n.expires_in || 3600); try { localStorage.setItem(K, JSON.stringify(n)) } catch (e) {} vai(n.access_token) })
+    .catch(entra);
+})();
+</script></body></html>
